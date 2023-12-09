@@ -104,11 +104,14 @@ source "$OSH"/oh-my-bash.sh
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
- export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
-export EDITOR=nvim
-alias vi=nvim
-alias vim=nvim
+# Use neovim when installed
+if $(which nvim | wc -l | grep -q 1); then
+  export EDITOR=nvim
+  alias vi=nvim
+  alias vim=nvim
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -125,15 +128,17 @@ alias vim=nvim
 # alias bashconfig="mate ~/.bashrc"
 # alias ohmybash="mate ~/.oh-my-bash"
 
-export GPG_TTY=$(tty)
-export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-gpgconf --launch gpg-agent
+# Don't set these in codespaces
+if $(uname -a | grep -i codespaces | wc -l | grep -q 1); then
+  export GPG_TTY=$(tty)
+  export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+  gpgconf --launch gpg-agent
 
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:/usr/sbin:/sbin
-export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+  export PATH=$PATH:/usr/local/go/bin
+  export PATH=$PATH:/usr/sbin:/sbin
+  export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-export PATH=~/.venv/bin:$PATH
+  # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+  export PATH="$PATH:$HOME/.rvm/bin"
+  export PATH=~/.venv/bin:$PATH
+fi
