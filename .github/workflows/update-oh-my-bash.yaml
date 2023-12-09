@@ -1,0 +1,23 @@
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  update-oh-my-bash:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update Oh My Bash
+        run: |
+          rm -rf .oh-my-bash
+          git clone --depth 1 https://github.com/ohmybash/oh-my-bash.git .oh-my-bash
+          rm -rf .oh-my-bash/.git
+          if [[ `git status --porcelain` ]]; then
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git config --global user.name "github-actions[bot]"
+            git add .oh-my-bash
+            git commit -m "Update Oh My Bash"
+            git push
+          fi
