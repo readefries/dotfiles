@@ -1,1 +1,1 @@
-# Hindrik`s dotfiles
+# Hendrik`s dotfiles
