@@ -5,18 +5,23 @@ case $- in
 esac
 
 # Path to your oh-my-bash installation.
-export OSH='~/.oh-my-bash'
+export OSH='/home/readefries/.oh-my-bash'
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-bash is loaded.
-OSH_THEME="agnoster"
+OSH_THEME="font"
+
+# If you set OSH_THEME to "random", you can ignore themes you don't like.
+# OMB_THEME_RANDOM_IGNORED=("powerbash10k" "wanelo")
+# You can also specify the list from which a theme is randomly selected:
+# OMB_THEME_RANDOM_CANDIDATES=("font" "powerline-light" "minimal")
 
 # Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+# OMB_CASE_SENSITIVE="true"
 
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
+# OMB_HYPHEN_SENSITIVE="false"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
 # DISABLE_AUTO_UPDATE="true"
@@ -41,6 +46,14 @@ OSH_THEME="agnoster"
 # much, much faster.
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
 
+# Uncomment the following line if you don't want the repository to be considered dirty
+# if there are untracked files.
+# SCM_GIT_DISABLE_UNTRACKED_DIRTY="true"
+
+# Uncomment the following line if you want to completely ignore the presence
+# of untracked files in the repository.
+# SCM_GIT_IGNORE_UNTRACKED="true"
+
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.  One of the following values can
 # be used to specify the timestamp format.
@@ -63,6 +76,14 @@ OSH_THEME="agnoster"
 # To disable the uses of "sudo" by oh-my-bash, please set "false" to
 # this variable.  The default behavior for the empty value is "true".
 OMB_USE_SUDO=true
+
+# To enable/disable display of Python virtualenv and condaenv
+# OMB_PROMPT_SHOW_PYTHON_VENV=true  # enable
+# OMB_PROMPT_SHOW_PYTHON_VENV=false # disable
+
+# To enable/disable Spack environment information
+# OMB_PROMPT_SHOW_SPACK_ENV=true  # enable
+# OMB_PROMPT_SHOW_SPACK_ENV=false # disable
 
 # Which completions would you like to load? (completions can be found in ~/.oh-my-bash/completions/*)
 # Custom completions may be added to ~/.oh-my-bash/custom/completions/
@@ -98,20 +119,27 @@ plugins=(
 #      plugins+=(tmux-autoattach)
 #  fi
 
+# If you want to reduce the initialization cost of the "tput" command to
+# initialize color escape sequences, you can uncomment the following setting.
+# This disables the use of the "tput" command, and the escape sequences are
+# initialized to be the ANSI version:
+#
+#OMB_TERM_USE_TPUT=no
+
 source "$OSH"/oh-my-bash.sh
 
 # User configuration
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-export LANG=en_US.UTF-8
+# export LANG=en_US.UTF-8
 
-# Use neovim when installed
-if $(which nvim | wc -l | grep -q 1); then
-  export EDITOR=nvim
-  alias vi=nvim
-  alias vim=nvim
-fi
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -128,17 +156,4 @@ fi
 # alias bashconfig="mate ~/.bashrc"
 # alias ohmybash="mate ~/.oh-my-bash"
 
-# Don't set these in codespaces
-if $(uname -a | grep -i codespaces | wc -l | grep -q 1); then
-  export GPG_TTY=$(tty)
-  export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-  gpgconf --launch gpg-agent
-
-  export PATH=$PATH:/usr/local/go/bin
-  export PATH=$PATH:/usr/sbin:/sbin
-  export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-
-  # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-  export PATH="$PATH:$HOME/.rvm/bin"
-  export PATH=~/.venv/bin:$PATH
-fi
+export GPG_TTY=$(tty)
